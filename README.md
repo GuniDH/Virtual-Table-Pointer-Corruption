@@ -14,7 +14,7 @@ Code provided in dangerous.cpp, vulnerability at handle\_escape function (lines 
 
 Vulnerability class:
 
-Virtual table corruption due to buffer overflow.
+Virtual table corruption due to buffer overflow.
 
 Description:
 
