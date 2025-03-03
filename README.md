@@ -1,26 +1,26 @@
-**Virtual Table Pointer Corruption – Guni Deyo Haness** 
+#Virtual Table Pointer Corruption – Guni Deyo Haness
 
-Threat:
+**Threat:**
 
 Information disclosure due to arbitrary code execution.
 
-Affected component:
+**Affected component:**
 
 Echo utility program that holds a very secret password.
 
-Module details:
+**Module details:**
 
 Code provided in dangerous.cpp, vulnerability at handle\_escape function (lines 70-95).
 
-Vulnerability class:
+**Vulnerability class:**
 
 Virtual table corruption due to buffer overflow.
 
-Description:
+**Description:**
 
 The Handler class contains virtual functions, therefore the compiler generates a virtual table that holds pointers to these functions, while each instance of the class holds a pointer to this table (vptr). At the handle\_escape function, a struct is being created and it holds a buffer at size of 16 which is located at the stack, and an instance “h” of the Handler class which is also located at the stack. This instance holds a vptr to the virtual table. As I found in my research, using GDB and PWNDBG, the stack memory is built such that the vptr of “h” is located straight after the memory allocated for the buffer. I found that by giving as an input a string, bigger than the 16 characters that were allocated for the buffer, and so causing buffer overflow, and then seeing on GDB that the value of vptr is being overwritten by the characters in my input string which are after the first 16.
 
-Result:
+**Result:**
 
 An attacker can engineer an input string that will cause buffer overflow and overwrite vptr and so run arbitrary code by directing different functions to be executed (“unreachable” function in this case), that’s because vptr points to the virtual table that holds pointers to the virtual functions. And the “unreachable” function that the attacker wants to run, is also located in it because its virtual. 
 
@@ -36,15 +36,15 @@ Therefore, considering the fact “helper” is being run, and that the differen
 
 ![](Images/4.png) 
 
-Prerequisites:
+**Prerequisites:**
 
 This threat/attack was successful due to the ability to debug, in most scenarios the user of this software won’t be able to debug the program, only running it – making the attack less likely to occur. Information disclosure - the very secret password has been leaked!
 
-Business impact:
+**Business impact:**
 
 If this software is owned by a company, this password might permit the attacker to access the company’s data bases, and so use private data of users and make the company face serious complaints due to federal user privacy rules. 
 
-Proposed remediation:
+**Proposed remediation:**
 
 Prevent buffer overflow by using a counter and taking only the first 15 characters from the input string and leaving a place for the null terminator. (Implemented in the fixed code file separately). Also, I noticed some input strings such as \\x with more than 8 characters after, cause out of range exception from ‘stoul’ in the “helper” function, so I added ‘try and catch’ declarations to “helper" in order to prevent the program from crashing. Using the exploit input string that we engineered with the fixed code will just cause an exception and so the attack will fail:
 
@@ -52,7 +52,7 @@ Prevent buffer overflow by using a counter and taking only the first 15 characte
 ![](Images/5.png) 
 
 
-Risk:
+**Risk:**
 
 Damage potential: 9 – very secret information disclosure.
 
