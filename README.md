@@ -1,4 +1,4 @@
-# Virtual Table Pointer Corruption – Guni Deyo Haness #
+# Virtual Table Pointer Corruption by Guni #
 
 **Threat:**
 
