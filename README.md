@@ -38,11 +38,7 @@ Therefore, considering the fact “helper” is being run, and that the differen
 
 **Prerequisites:**
 
-This threat/attack was successful due to the ability to debug, in most scenarios the user of this software won’t be able to debug the program, only running it – making the attack less likely to occur. Information disclosure - the very secret password has been leaked!
-
-**Business impact:**
-
-If this software is owned by a company, this password might permit the attacker to access the company’s data bases, and so use private data of users and make the company face serious complaints due to federal user privacy rules. 
+This threat/attack was successful due to the ability to debug, in most scenarios the user of this software won’t be able to debug the program, only running it – making the attack less likely to occur. Information disclosure - the very secret password has been leaked.
 
 **Proposed remediation:**
 
@@ -51,17 +47,5 @@ Prevent buffer overflow by using a counter and taking only the first 15 characte
 
 ![](Images/5.png) 
 
-
-**Risk:**
-
-Damage potential: 9 – very secret information disclosure.
-
-Reproducibility: 6 – due to the fact, as I explained, this attack should work and does work for me with ASLR turned on, the attack is easier to reproduce.
-
-Exploitability: 3 – this attack was successful due to the ability to debug, which probably won’t be available to a regular user of the software.
-
-Affected users: 8 – potentially, the secret password disclosure could lead to users` private information leakage, in case this software is owned by a company that holds data bases of user and their private info. 
-
-Discoverability: 8 – today many tools/compilers can help find buffer overflow vulnerabilities.
 
 
